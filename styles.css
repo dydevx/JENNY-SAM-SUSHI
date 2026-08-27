@@ -83,3 +83,17 @@ dialog[open]{animation:dialog-in .36s var(--ease-out) both}dialog[open]::backdro
 @media(max-width:390px){.footer-identity h2{font-size:30px}.footer-cta,.site-footer .footer-grid{grid-template-columns:1fr}}
 .wa-float{right:20px;bottom:20px;display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:8px 18px 8px 9px;border-radius:999px;background:#159b55;color:#fff;font-size:15px;font-weight:800;letter-spacing:.01em;box-shadow:0 6px 8px rgba(0,0,0,.28);transition:transform .22s var(--ease-out),background-color .22s ease}.wa-float:hover{background:#20ad64;transform:translateY(-2px)}.wa-float:active{transform:translateY(0)}.wa-icon{display:grid!important;place-items:center;width:38px;height:38px;border-radius:50%;background:#fff;color:#128c4e;font-size:23px;line-height:1}.wa-label{display:inline!important}
 @media(max-width:430px){.wa-float{right:14px;bottom:max(14px,env(safe-area-inset-bottom));min-width:52px;min-height:52px;padding:7px;border-radius:50%}.wa-icon{width:38px;height:38px}.wa-label{display:none!important}}
+
+/* Interaction choreography: depth, confirmation and spatial orientation */
+.site-header nav a.is-current{color:#fff}.site-header nav a.is-current:after{transform:scaleX(1);transform-origin:left}
+.special{transform:perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg));transition:transform .45s var(--ease-out)}
+.special:before{content:"";position:absolute;z-index:2;inset:0;pointer-events:none;background:radial-gradient(circle at var(--light-x,50%) var(--light-y,50%),rgba(255,255,255,.13),transparent 34%);opacity:0;transition:opacity .3s}
+.special:hover:before{opacity:1}.special:hover{transform:perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) translateY(-3px)}
+.dish.just-added{animation:dish-confirm .52s var(--ease-out)}.dish button.is-confirmed{background:#f4f0e8;color:#15110f;border-color:#f4f0e8}
+@keyframes dish-confirm{0%{box-shadow:inset 0 0 0 0 rgba(211,43,49,0)}35%{box-shadow:inset 0 0 0 2px rgba(211,43,49,.8)}100%{box-shadow:inset 0 0 0 0 rgba(211,43,49,0)}}
+.cart-line{animation:cart-line-in .32s var(--ease-out) both}@keyframes cart-line-in{from{opacity:0;transform:translateX(10px)}}
+.gallery-item{transform:translateY(18px);opacity:.72;transition:transform .7s var(--ease-out),opacity .55s,filter .45s;filter:saturate(.7)}
+.gallery-grid.is-visible .gallery-item{transform:none;opacity:1;filter:saturate(1)}.gallery-grid.is-visible .gallery-item:nth-child(2){transition-delay:70ms}.gallery-grid.is-visible .gallery-item:nth-child(3){transition-delay:120ms}.gallery-grid.is-visible .gallery-item:nth-child(4){transition-delay:170ms}
+.gallery-item:hover{transform:scale(.985);filter:saturate(1.12) contrast(1.04)}
+.qty button{transition:transform .12s var(--ease-out),background .2s}.qty button:hover{background:var(--red)}.qty button:active{transform:scale(.86)}
+@media(prefers-reduced-motion:reduce){.special,.special:hover{transform:none}.special:before{display:none}.gallery-item,.gallery-grid.is-visible .gallery-item{opacity:1;transform:none;filter:none;transition:none}.dish.just-added,.cart-line{animation:none}}

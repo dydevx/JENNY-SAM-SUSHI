@@ -41,9 +41,26 @@ const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{i
 revealTargets.forEach(el=>revealObserver.observe(el));
 const categoryObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('in-view')}),{threshold:.08});
 document.querySelectorAll('.menu-category').forEach(el=>categoryObserver.observe(el));
-document.addEventListener('click',e=>{if(e.target.closest('[data-add]')){const fab=document.querySelector('#cart-fab');fab.classList.remove('bump');requestAnimationFrame(()=>fab.classList.add('bump'))}});
+document.addEventListener('click',e=>{const add=e.target.closest('[data-add]');if(add){const fab=document.querySelector('#cart-fab'),dish=add.closest('.dish');fab.classList.remove('bump');dish?.classList.remove('just-added');requestAnimationFrame(()=>{fab.classList.add('bump');dish?.classList.add('just-added')});const old=add.textContent;add.textContent='Hinzugefügt ✓';add.classList.add('is-confirmed');setTimeout(()=>{add.textContent=old;add.classList.remove('is-confirmed');dish?.classList.remove('just-added')},900)}});
 const searchInput=document.querySelector('#menu-search'),categorySelect=document.querySelector('#category-select'),menuResult=document.querySelector('#menu-result');
 function filterMenu(){const query=searchInput.value.trim().toLowerCase(),category=categorySelect.value;let visible=0;document.querySelectorAll('.menu-category').forEach(section=>{const active=section.dataset.category===category;section.querySelectorAll('.dish').forEach(dish=>{const show=active&&(!query||dish.dataset.search.includes(query));dish.hidden=!show;if(show)visible++});section.hidden=!active});menuResult.textContent=visible===1?'1 Ergebnis':`${visible} Ergebnisse`;}
 searchInput.addEventListener('input',filterMenu);categorySelect.addEventListener('change',()=>{searchInput.value='';document.querySelectorAll('.category-nav button').forEach(button=>button.classList.toggle('active',button.dataset.target===categorySelect.value));filterMenu()});
 document.querySelector('#categories').addEventListener('click',e=>{const button=e.target.closest('[data-target]');if(!button)return;categorySelect.value=button.dataset.target;searchInput.value='';filterMenu()});
 categorySelect.value=slug(menu[0][0]);filterMenu();
+
+// A restrained depth layer for food photography on precise pointers.
+if(matchMedia('(pointer:fine) and (prefers-reduced-motion:no-preference)').matches){
+  document.querySelectorAll('.special').forEach(card=>{
+    card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.setProperty('--tilt-x',`${(-y*2.2).toFixed(2)}deg`);card.style.setProperty('--tilt-y',`${(x*2.2).toFixed(2)}deg`);card.style.setProperty('--light-x',`${((x+.5)*100).toFixed(0)}%`);card.style.setProperty('--light-y',`${((y+.5)*100).toFixed(0)}%`)});
+    card.addEventListener('pointerleave',()=>{card.style.removeProperty('--tilt-x');card.style.removeProperty('--tilt-y')});
+  });
+}
+
+// Keep orientation visible while browsing long pages.
+const pageSections=[...document.querySelectorAll('main section[id]')],navLinks=[...document.querySelectorAll('#nav a[href^="#"]')];
+const navObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(!entry.isIntersecting)return;navLinks.forEach(link=>link.classList.toggle('is-current',link.getAttribute('href')===`#${entry.target.id}`))}),{rootMargin:'-28% 0px -62%',threshold:0});
+pageSections.forEach(section=>navObserver.observe(section));
+
+// Gallery items arrive as one composed sequence, not repeated section fades.
+const gallery=document.querySelector('.gallery-grid');
+if(gallery){const galleryObserver=new IntersectionObserver(([entry])=>{if(entry.isIntersecting){gallery.classList.add('is-visible');galleryObserver.disconnect()}},{threshold:.18});galleryObserver.observe(gallery)}
