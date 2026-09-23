@@ -85,7 +85,7 @@ const menu=[
 59|KÜRBIS||3.5|Kürbis
 60|PAPRIKA||3.3|Paprika, Sesam
 61|FUTO BIG ROLL|4|7.0|Lachs, verschiedenes Gemüse
-62|FUTO VEGGIE|11|6.5|Verschiedenes Gemüse, Sesam
+62|FUTO VEGGIE|11|4.0|Verschiedenes Gemüse, Sesam
 63|ASUPARA|7,11|4.0|Mango, Sesam
 64|SAM|3,4|4.0|Gedämpfter Lachs, Mayo, Lauch, Chili
 65|TORI KARAAGE||4.0|Hähnchenstreifen`)],
@@ -188,7 +188,7 @@ const menu=[
 422|CRISPY CRAB RICE|1a,2,3|5.5|4 Stück
 423|FIRE TUNA|1a,3,4,7|7.5|4 Stück · 8 Stück: 13,00 €
 424|FIRE SALMON|1a,3|6.9|4 Stück · 8 Stück: 11,90 €
-425|FIRE OCEAN ROLLS|1a,2,3,4,7|14.0|8 Stück`)],
+425|FIRE OCEAN ROLLS|1a,2,3,4,7|7.9|4 Stück · 8 Stück: 14,00 €`)],
 ['Panierte Mini Rolls · 6 Stück',rows(`430|NEW YORK ROLLS|1a,3,4,7|9.2|Lachs, Gurke, Avocado, Frischkäse
 431|AIKO ROLLS|1a,3,4|9.2|Gekochter Thunfisch, Mayo, Chili, Gurke
 432|TOKYO ROLLS|1a,3,Srm,4,7|9.2|Lachshaut, Aal, Surimi, Gurke, Frischkäse
