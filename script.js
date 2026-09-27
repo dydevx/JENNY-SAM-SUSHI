@@ -308,7 +308,7 @@ replaceCategory('Desserts',rows(`620|DRAGON BALL||4.0|4 Stück, gefüllt mit sü
 622|LUCKY EGG||4.0|4 Stück, gefüllt mit Vanille
 623|BANANE||4.0|Gebackene Banane mit Spezialsoße
 624|APPEL FLIRT||4.0|Mit Spezialsoße
-625|ANANAS FLIRT||7.9|4 Stück, mit Spezialsoße`));
+625|ANANAS FLIRT||4.0|4 Stück, mit Spezialsoße`));
 const drinks=menu.find(x=>x[0]==='Getränke');
 drinks[1]=drinks[1].flatMap(d=>['760','761','762','763','770'].includes(d[0])?[[`${d[0]}~0,2 l`,`${d[1]} · 0,2 l`,d[2],d[3],5.5],[`${d[0]}~0,75 l`,`${d[1]} · Flasche 0,75 l`,d[2],d[3],17.9]]:[d]);
 const unnamedBeer=drinks[1].find(d=>d[0]==='751');if(unnamedBeer)unnamedBeer[1]='OHNE BEZEICHNUNG IN DER PDF';
